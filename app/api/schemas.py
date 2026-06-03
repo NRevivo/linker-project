@@ -1,17 +1,18 @@
-"""Pydantic request/response schemas exposed by the HTTP API."""
+from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 
 class CreateUrlRequest(BaseModel):
-    """Payload submitted to POST /shorten describing the URL to shorten."""
+    """Incoming payload for POST /shorten."""
 
-    target_url: str
+    original_url: HttpUrl
 
 
 class UrlResponse(BaseModel):
-    """Response body returned after creating or resolving a short URL."""
+    """Outgoing payload representing a stored short URL."""
 
     short_code: str
+    original_url: str
     short_url: str
-    target_url: str
+    created_at: datetime
