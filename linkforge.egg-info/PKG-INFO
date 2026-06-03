@@ -9,6 +9,7 @@ Requires-Dist: pydantic-settings
 Requires-Dist: sqlalchemy
 Requires-Dist: alembic
 Requires-Dist: uvicorn
+Requires-Dist: psycopg[binary]
 Provides-Extra: dev
 Requires-Dist: pytest; extra == "dev"
 Requires-Dist: httpx; extra == "dev"

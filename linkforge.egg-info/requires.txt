@@ -4,6 +4,7 @@ pydantic-settings
 sqlalchemy
 alembic
 uvicorn
+psycopg[binary]
 
 [dev]
 pytest

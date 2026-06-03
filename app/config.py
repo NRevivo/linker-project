@@ -1,22 +1,31 @@
-"""Application configuration loaded from environment variables."""
-
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    """Runtime configuration for LinkForge.
+    """Application configuration loaded from environment variables.
 
-    Values are populated from environment variables (and an optional
-    ``.env`` file) by pydantic-settings.
+    Values can be overridden via environment variables or a .env file
+    in the project root. Variable names are case-insensitive.
     """
 
-    database_url: str
-    base_url: str
-    code_length: int
-    max_retries: int
-    log_level: str
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+    )
+
+    # Database
+    database_url: str = "postgresql+psycopg://linkforge:linkforge@localhost:5432/linkforge"
+
+    # Application
+    base_url: str = "http://localhost:8000"
+
+    # Short code generation
+    code_length: int = 7
+    max_retries: int = 5
+
+    # Logging
+    log_level: str = "INFO"
 
 
-def get_settings() -> Settings:
-    """Return the application Settings singleton."""
-    ...
+settings = Settings()

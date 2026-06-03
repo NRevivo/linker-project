@@ -7,7 +7,7 @@ from app.api.dependencies import get_url_service
 from app.api.schemas import CreateUrlRequest, UrlResponse
 from app.domain.errors import CollisionError, NotFoundError
 from app.service.url_service import UrlService
-
+from app.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +36,7 @@ def shorten(
     return UrlResponse(
         short_code=short_url.short_code,
         original_url=short_url.original_url,
-        short_url=f"http://localhost:8000/{short_url.short_code}",
+        short_url=f"{settings.base_url}/{short_url.short_code}",
         created_at=short_url.created_at,
     )
 
