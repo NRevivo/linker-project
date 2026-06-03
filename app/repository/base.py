@@ -1,25 +1,23 @@
-"""Structural interface for short URL repositories."""
-
-from typing import Protocol
+from typing import Optional, Protocol
 
 from app.domain.models import ShortUrl
 
 
 class UrlRepository(Protocol):
-    """Port describing persistence operations for ShortUrl entities.
+    """Persistence contract for short URLs.
 
-    Implementations may be in-memory, SQL-backed, or remote; the
-    service depends only on this protocol.
+    Implementations may use Postgres, MongoDB, in-memory storage, etc.
+    The service depends only on this abstraction.
     """
 
-    def save(self, short_url: ShortUrl) -> None:
-        """Persist a ShortUrl, raising CollisionError on duplicate code."""
+    def save(self, short_url: ShortUrl) -> ShortUrl:
+        """Persist a short URL and return the saved entity."""
         ...
 
-    def get(self, short_code: str) -> ShortUrl:
-        """Return the ShortUrl for ``short_code`` or raise NotFoundError."""
+    def get(self, short_code: str) -> Optional[ShortUrl]:
+        """Retrieve a short URL by its code, or None if not found."""
         ...
 
     def exists(self, short_code: str) -> bool:
-        """Return True if a ShortUrl with ``short_code`` is stored."""
+        """Return True if a short URL with this code already exists."""
         ...

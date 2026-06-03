@@ -1,13 +1,18 @@
-"""Random short-code generator implementation."""
+import secrets
+import string
 
 
 class RandomCodeGenerator:
-    """Produces short codes by sampling a URL-safe alphabet at random.
+    """Generates short codes using cryptographically secure random characters.
 
-    Satisfies the CodeGenerator protocol structurally; no explicit
-    inheritance is required.
+    Codes are drawn from URL-safe alphanumeric characters.
+    Collision handling is the service's responsibility, not the generator's.
     """
 
-    def generate(self, length: int) -> str:
-        """Return a random short code of the given ``length``."""
-        ...
+    _ALPHABET = string.ascii_letters + string.digits
+
+    def __init__(self, length: int) -> None:
+        self._length = length
+
+    def generate(self) -> str:
+        return "".join(secrets.choice(self._ALPHABET) for _ in range(self._length))

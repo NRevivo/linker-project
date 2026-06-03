@@ -1,16 +1,13 @@
-"""Structural interface for short-code generators."""
-
 from typing import Protocol
 
 
 class CodeGenerator(Protocol):
-    """Port describing any strategy that can produce a short URL code.
+    """Strategy for generating short codes.
 
-    Implementations may be random, hash-based, sequential, etc. The
-    service depends only on this protocol so generation strategies
-    remain interchangeable.
+    Implementations decide the algorithm (random, base62, hash-based, etc.).
+    The service depends on this abstraction, never on a concrete generator.
     """
 
-    def generate(self, length: int) -> str:
-        """Return a freshly produced short code of the requested length."""
+    def generate(self) -> str:
+        """Return a newly generated short code."""
         ...

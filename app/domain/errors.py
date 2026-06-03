@@ -1,10 +1,3 @@
-"""Domain-level error hierarchy for LinkForge.
-
-These exceptions describe failure modes in business terms and are
-intentionally free of HTTP or persistence specifics. The API layer
-translates them into HTTP responses; the repository layer raises
-RepositoryError for infrastructure problems.
-"""
 
 
 class DomainError(Exception):
