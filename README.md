@@ -27,35 +27,7 @@ The goal isn't to compete with Bitly. It's to demonstrate sound architectural ch
 
 The backend follows a clean layered design with dependency inversion via `typing.Protocol` (structural typing, not ABC). The domain layer is pure Python with zero infrastructure imports. The service depends only on the `UrlRepository` and `CodeGenerator` Protocols. The composition root in `app/api/dependencies.py` is the only file that knows about concrete implementations.
 
-```
-┌─────────────────┐
-│  React Frontend │
-└────────┬────────┘
-         │ HTTP
-         ▼
-┌─────────────────────────────────────────────┐
-│              FastAPI Controller             │
-│  (translates HTTP ⇄ domain, no logic)       │
-└────────┬────────────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────────────┐
-│              UrlService                     │
-│  (business logic, retries on collision)     │
-└────┬────────────────────────────────┬───────┘
-     │                                │
-     ▼                                ▼
-┌──────────────────┐         ┌──────────────────┐
-│ UrlRepository    │         │ CodeGenerator    │
-│ (Protocol)       │         │ (Protocol)       │
-└────────┬─────────┘         └────────┬─────────┘
-         │                            │
-   ┌─────┴─────┐                      ▼
-   ▼           ▼                ┌──────────────┐
-┌──────┐  ┌──────────┐          │ Random       │
-│ Mem  │  │ Postgres │          │ (secrets)    │
-└──────┘  └──────────┘          └──────────────┘
-```
+![Linker architecture diagram](docs/linker%20diagram.png)
 
 ### Key design decisions
 
